@@ -1,1 +1,58 @@
 @import "tailwindcss";
+
+@theme inline {
+  --color-text: var(--color-text);
+  --color-error: var(--color-error);
+  --color-paper: var(--color-paper);
+  --color-primary: var(--color-primary);
+  --color-background: var(--color-background);
+  --color-primary-contrast: var(--color-primary-contrast);
+}
+
+:root {
+  --color-text: #ffffff;
+  --color-error: #980000;
+  --color-paper: #232323;
+  --color-primary: #009688;
+  --color-background: #000000;
+  --color-primary-contrast: #ffffff;
+}
+
+* {
+	@apply outline-primary outline-1 -outline-offset-2
+}
+
+html,
+body {
+	overflow: overlay;
+  @apply bg-background text-text w-screen h-screen underline-offset-4;
+}
+
+a {
+	@apply hover:underline active:opacity-50 transition-opacity
+}
+
+
+.overflow-primary::-webkit-scrollbar-thumb {
+  @apply bg-primary;
+}
+
+*::-webkit-scrollbar {
+  @apply h-3 w-2;
+}
+
+*::-webkit-scrollbar-button {
+  @apply hidden;
+}
+
+*::-webkit-scrollbar-corner {
+  @apply bg-transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-paper;
+}
+
+*::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
