@@ -11,11 +11,11 @@ export const metadata: Metadata = {
   description: "Os melhores cursos de programação gratuitos com a melhor experiência de aprendizado e foco",
 };
 
-interface IRootLayout extends Readonly<{ children: React.ReactNode }> { }
+type RootLayoutProps = Readonly<{ children: React.ReactNode }>;
 
-export default function RootLayout({ children }: IRootLayout) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="pt-Br">
+    <html lang="pt-BR">
       <body className={nunito.className}>
         {children}
       </body>

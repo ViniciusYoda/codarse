@@ -20,10 +20,12 @@ export const PlayerPlaylist = ({ classGroups, playingClassId, playingCourseId }:
     );
 
     useEffect(() => {
-        const watchedContent = LocalStorage.watchedContent.get(playingCourseId);
-        if (!watchedContent) return;
+        const timeoutId = window.setTimeout(() => {
+            const watchedContent = LocalStorage.watchedContent.get(playingCourseId);
+            setWatchedContentIds(watchedContent ?? []);
+        }, 0);
 
-        setWatchedContentIds(watchedContent);
+        return () => window.clearTimeout(timeoutId);
     }, [playingCourseId]);
 
     const classGroupsWithDone = useMemo(() => {
@@ -44,16 +46,17 @@ export const PlayerPlaylist = ({ classGroups, playingClassId, playingCourseId }:
     }, [playingCourseId]);
 
     return (
-        <div className='flex flex-col gap-2 h-full'>
-            <div className='flex flex-col p-4 bg-paper'>
-                <h3 className='text-lg font-bold'>
+        <div className='flex h-full flex-col'>
+            <div className='flex flex-col gap-1 border-b border-border p-5'>
+                <span className='text-xs font-extrabold uppercase tracking-[0.16em] text-primary'>Sua trilha</span>
+                <h3 className='text-lg font-black'>
                     Conteudo do curso
                 </h3>
             </div>
 
-            <ol className='overflow-auto overflow-primary'>
+            <ol className='overflow-primary min-h-0 flex-1 overflow-auto p-2'>
                 {classGroupsWithDone.map((classGroup, index) => (
-                    <li key={classGroup.title}>
+                    <li key={classGroup.classes[0]?.classId ?? `${classGroup.title}-${index}`}>
                         <PlayerClassGroup
                             {...classGroup}
 

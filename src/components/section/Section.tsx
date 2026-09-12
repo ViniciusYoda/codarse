@@ -18,7 +18,7 @@ export const Section = ({ title, items, variant = 'grid' }: ISectionProps) => {
     const handleScroll = (event: UIEvent<HTMLUListElement>) => {
         if (event.currentTarget.scrollLeft === 0) {
             setScrollAt('start');
-        } else if ((event.currentTarget.scrollWidth - event.currentTarget.clientWidth) === event.currentTarget.scrollLeft) {
+        } else if (event.currentTarget.scrollLeft >= event.currentTarget.scrollWidth - event.currentTarget.clientWidth - 1) {
             setScrollAt('end');
         } else {
             setScrollAt('middle');
@@ -31,29 +31,37 @@ export const Section = ({ title, items, variant = 'grid' }: ISectionProps) => {
     };
 
     return (
-        <section className='flex flex-col gap-4 px-4'>
-            <h2 className='font-bold text-xl'>
-                {title}
-            </h2>
+        <section className='flex flex-col gap-5'>
+            <div className='flex items-end justify-between gap-4'>
+                <div>
+                    <span className='mb-2 block text-xs font-extrabold uppercase tracking-[0.18em] text-primary'>Aprenda no seu ritmo</span>
+                    <h2 className='text-2xl font-black tracking-tight sm:text-3xl'>{title}</h2>
+                </div>
+                <span className='text-sm font-bold text-text-muted'>{items.length} cursos</span>
+            </div>
 
             <ul
                 ref={scrollRef}
                 data-variant={variant}
                 onScroll={handleScroll}
-                className='grid gap-2 grid-cols-1 sm:grid-cols-none data-[variant=grid]:sm:grid-cols-2 data-[variant=grid]:md:grid-cols-3 data-[variant=h-list]:sm:grid-flow-col data-[variant=h-list]:sm:overflow-x-auto'
+                className='grid grid-cols-1 gap-5 data-[variant=grid]:sm:grid-cols-2 data-[variant=grid]:lg:grid-cols-3 data-[variant=h-list]:sm:auto-cols-max data-[variant=h-list]:sm:grid-flow-col data-[variant=h-list]:sm:overflow-x-auto data-[variant=h-list]:sm:pb-3'
             >
                 {variant === 'h-list' && (
-                    <button
-                        disabled={scrollAt === 'start'}
-                        onClick={() => handleSetScroll(-350)}
-                        className='h-14 w-14 bg-primary rounded-full hidden sm:flex items-center justify-center sticky my-auto left-0 -ml-14 transition-opacity disabled:opacity-0 active:opacity-80'
-                    >
-                        <MdKeyboardArrowLeft size={32} />
-                    </button>
+                    <li className='sticky left-2 z-10 my-auto hidden w-0 sm:block'>
+                        <button
+                            type='button'
+                            aria-label='Ver cursos anteriores'
+                            disabled={scrollAt === 'start'}
+                            onClick={() => handleSetScroll(-350)}
+                            className='flex h-14 w-14 items-center justify-center rounded-full bg-primary transition-opacity disabled:opacity-0 active:opacity-80'
+                        >
+                            <MdKeyboardArrowLeft size={32} />
+                        </button>
+                    </li>
                 )}
 
                 {items.map(item => (
-                    <li key={item.title} data-variant={variant} className='w-full data-[variant=h-list]:sm:w-72'>
+                    <li key={item.href} data-variant={variant} className='w-full snap-start data-[variant=h-list]:sm:w-76'>
                         <Card
                             href={item.href}
                             title={item.title}
@@ -64,13 +72,17 @@ export const Section = ({ title, items, variant = 'grid' }: ISectionProps) => {
                 ))}
 
                 {variant === 'h-list' && (
-                    <button
-                        disabled={scrollAt === 'end'}
-                        onClick={() => handleSetScroll(350)}
-                        className='h-14 w-14 bg-primary rounded-full hidden sm:flex items-center justify-center sticky my-auto right-0 -ml-14 transition-opacity disabled:opacity-0 active:opacity-80'
-                    >
-                        <MdKeyboardArrowRight size={32} />
-                    </button>
+                    <li className='sticky right-16 z-10 my-auto hidden w-0 sm:block'>
+                        <button
+                            type='button'
+                            aria-label='Ver próximos cursos'
+                            disabled={scrollAt === 'end'}
+                            onClick={() => handleSetScroll(350)}
+                            className='flex h-14 w-14 items-center justify-center rounded-full bg-primary transition-opacity disabled:opacity-0 active:opacity-80'
+                        >
+                            <MdKeyboardArrowRight size={32} />
+                        </button>
+                    </li>
                 )}
             </ul>
         </section>

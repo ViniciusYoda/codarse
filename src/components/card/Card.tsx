@@ -10,24 +10,33 @@ export interface ICardProps {
 
 export const Card = ({ title, description, image, href }: ICardProps) => {
     return (
-        <Link href={href} className='hover:no-underline'>
-            <article className='flex gap-2 flex-col p-2 rounded sm:hover:big-primary'>
-                <Image
-                    height={0}
-                    src={image}
-                    alt={title}
-                    width={1000}
-                    draggable={false}
-                    className='aspect-video object-cover rounded-2xl'
-                />
+        <Link href={href} className='group block h-full hover:no-underline'>
+            <article className='flex h-full flex-col overflow-hidden rounded-2xl border border-white/8 bg-paper transition duration-300 hover:-translate-y-1 hover:border-primary/35 hover:bg-paper-elevated hover:shadow-[0_20px_55px_rgba(0,0,0,0.34)]'>
+                <div className='overflow-hidden'>
+                {image ? (
+                    <Image
+                        height={360}
+                        src={image}
+                        alt={title}
+                        width={640}
+                        sizes='(min-width: 640px) 18rem, 100vw'
+                        draggable={false}
+                        className='aspect-video w-full object-cover transition duration-500 group-hover:scale-[1.035]'
+                    />
+                ) : (
+                    <div aria-hidden className='aspect-video w-full bg-paper-elevated' />
+                )}
+                </div>
 
-                <h4 className='font-extrabold text-lg'>
-                    {title}
-                </h4>
+                <div className='flex flex-1 flex-col gap-3 p-5'>
+                    <h3 className='text-lg font-black leading-snug transition-colors group-hover:text-primary'>
+                        {title}
+                    </h3>
 
-                <p className='line-clamp-3 sm:line-clamp-4 md:line-clamp-5'>
-                    {description}
-                </p>
+                    <p className='line-clamp-3 text-sm leading-6 text-text-muted'>
+                        {description}
+                    </p>
+                </div>
             </article>
         </Link>
     )

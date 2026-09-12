@@ -17,13 +17,13 @@ export interface IPlayerClassGroupProps {
 }
 export const PlayerClassGroup = ({ classes, position, title, open, playingClassId, onToggle, onPlay, onCheck }: IPlayerClassGroupProps) => {
     return (
-        <div className='flex flex-col'>
-            <button className='flex gap-2 p-4 bg-paper items-center active:opacity-80' onClick={onToggle}>
-                <div className='bg-background h-12 w-12 rounded-full flex items-center justify-center'>
+        <div className='flex flex-col overflow-hidden rounded-xl'>
+            <button type='button' className='flex items-center gap-3 rounded-xl p-3 text-left transition hover:bg-paper-elevated active:opacity-80' onClick={onToggle}>
+                <div className='grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-background text-sm font-black text-primary'>
                     {position}
                 </div>
 
-                <div className='flex flex-col flex-1 items-start'>
+                <div className='flex min-w-0 flex-1 flex-col items-start'>
                     <span className='font-bold text-start line-clamp-1'>{title}</span>
                     <span className='text-sm font-light text-start line-clamp-1'>
                         {classes.filter((classItem) => classItem.done).length}/{classes.length} aulas
@@ -36,9 +36,9 @@ export const PlayerClassGroup = ({ classes, position, title, open, playingClassI
                 }
             </button>
 
-            <ol data-open={open} className='flex flex-col data-[open=false]:hidden'>
+            <ol data-open={open} className='ml-5 flex flex-col border-l border-border pl-2 data-[open=false]:hidden'>
                 {classes.map(classItem => (
-                    <li key={classItem.title}>
+                    <li key={classItem.classId}>
                         <PlayerClass
                             {...classItem}
 

@@ -16,34 +16,36 @@ export const StartCourse = ({ idClass, idCourse, imageUrl, title }: IStartCourse
 
   return (
     <>
-      <div ref={ref} className='p-3 bg-paper rounded-md flex flex-col gap-4 md:sticky md:top-[104px]'>
+      <div ref={ref} className='flex flex-col gap-4 rounded-3xl border border-border bg-paper p-4 shadow-[0_24px_80px_rgba(0,0,0,0.34)]'>
         <Link
           href={`/player/${idCourse}/${idClass}`}
           style={{ backgroundImage: `url(${imageUrl})` }}
-          className='w-full bg-cover bg-no-repeat aspect-video bg-center rounded'
+          className='group aspect-video w-full overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat'
         >
-          <div className='w-full h-full flex items-center justify-center bg-background rounded opacity-0 hover:opacity-70 transition-opacity'>
-            <MdPlayCircleOutline size={58} />
+          <div className='flex h-full w-full items-center justify-center bg-background/35 transition group-hover:bg-background/55'>
+            <span className='grid h-16 w-16 place-items-center rounded-full bg-primary text-primary-contrast shadow-[0_10px_35px_rgba(0,0,0,0.4)] transition group-hover:scale-110 group-hover:bg-primary-hover'>
+              <MdPlayCircleOutline size={38} />
+            </span>
           </div>
         </Link>
 
         <Link
           href={`/player/${idCourse}/${idClass}`}
-          className='bg-primary p-2 px-3 rounded text-center hover:no-underline'
+          className='rounded-xl bg-primary px-4 py-3 text-center font-black text-primary-contrast transition hover:bg-primary-hover hover:no-underline'
         >
           Começar curso
         </Link>
       </div>
 
       {!inView && (
-        <div className='p-3 px-2 bg-paper flex flex-col gap-4 absolute left-0 right-0 top-14'>
-          <h1 className='font-extrabold text-xl'>
+        <div className='fixed inset-x-3 bottom-3 z-30 flex items-center gap-3 rounded-2xl border border-border bg-paper/95 p-3 shadow-2xl backdrop-blur-xl md:hidden'>
+          <h2 className='line-clamp-1 min-w-0 flex-1 font-extrabold'>
             {title}
-          </h1>
+          </h2>
 
           <Link
             href={`/player/${idCourse}/${idClass}`}
-            className='bg-primary p-2 px-3 rounded text-center hover:no-underline'
+            className='shrink-0 rounded-xl bg-primary px-4 py-2.5 text-center text-sm font-black text-primary-contrast hover:bg-primary-hover hover:no-underline'
           >
             Começar curso
           </Link>

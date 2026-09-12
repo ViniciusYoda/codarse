@@ -10,8 +10,11 @@ export const KeepWatching = () => {
   const [data, setData] = useState<IKeepWatching | null>(null);
 
   useEffect(() => {
-    const data = LocalStorage.keepWatching.get();
-    setData(data);
+    const timeoutId = window.setTimeout(() => {
+      setData(LocalStorage.keepWatching.get());
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
 
@@ -20,16 +23,17 @@ export const KeepWatching = () => {
   return (
     <Link
       href={`/player/${data.courseId}/${data.classId}`}
-      className='p-4 mx-4 flex gap-2 bg-primary rounded-2xl hover:no-underline'
+      className='group relative flex overflow-hidden rounded-3xl border border-primary/25 bg-gradient-to-br from-primary/18 via-paper to-paper p-5 shadow-[0_20px_70px_rgba(0,0,0,0.28)] transition hover:-translate-y-0.5 hover:border-primary/50 hover:no-underline sm:p-6'
     >
-      <div className='flex flex-col gap-2 flex-1'>
-        <h1 className='font-bold line-clamp-1'>{data.className}</h1>
-        <p className='line-clamp-1'>{data.courseName}</p>
+      <div className='flex min-w-0 flex-1 flex-col gap-1'>
+        <span className='mb-2 text-xs font-extrabold uppercase tracking-[0.18em] text-primary'>Continue de onde parou</span>
+        <h2 className='line-clamp-1 text-xl font-black sm:text-2xl'>{data.className}</h2>
+        <p className='line-clamp-1 text-sm text-text-muted sm:text-base'>{data.courseName}</p>
       </div>
 
-      <div className='flex gap-2 items-center justify-center'>
-        <span className='hidden md:block'>Continuar assistindo</span>
-        <MdPlayCircle size={28} />
+      <div className='ml-4 flex items-center justify-center gap-2 self-center rounded-full bg-primary px-3 py-3 font-extrabold text-primary-contrast transition group-hover:bg-primary-hover sm:px-5'>
+        <span className='hidden md:block'>Continuar</span>
+        <MdPlayCircle size={26} />
       </div>
     </Link>
   );

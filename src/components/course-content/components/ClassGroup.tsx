@@ -3,7 +3,6 @@ import { useState } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 
 import { Class } from './Class'
-import { title } from "process";
 
 export interface IClassGroupProps {
     title: string;
@@ -18,10 +17,11 @@ export const ClassGroup = ({ classes, courseId, title }: IClassGroupProps) => {
     const [open, setOpen] = useState(false);
 
     return (
-        <>
+        <div className='overflow-hidden rounded-2xl border border-border bg-paper'>
             <button
+                type='button'
                 onClick={() => setOpen(!open)}
-                className='flex items-center gap-6 p-4 bg-paper'
+                className='flex w-full items-center gap-4 p-5 text-left font-extrabold transition hover:bg-paper-elevated'
             >
                 {open
                     ? <MdKeyboardArrowDown size={24} />
@@ -31,7 +31,7 @@ export const ClassGroup = ({ classes, courseId, title }: IClassGroupProps) => {
                 {title}
             </button>
 
-            <ol data-open={open} className='flex flex-col data-[open-false]:hidden'>
+            <ol data-open={open} className='flex flex-col border-t border-border data-[open=false]:hidden'>
                 {classes.map(({ id, title }) => (
                     <li key={id}>
                         <Class
@@ -41,6 +41,6 @@ export const ClassGroup = ({ classes, courseId, title }: IClassGroupProps) => {
                     </li>
                 ))}
             </ol>
-        </>
+        </div>
     )
 }

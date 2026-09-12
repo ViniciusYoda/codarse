@@ -7,9 +7,14 @@ interface ICommentsProps {
 export const Comments = ({ comments }: ICommentsProps) => {
 
     return (
-        <div className="flex gap-2 flex-col">
-            {comments.map(comment => (
-                <Comment key={comment.publishDate} {...comment} />
+        <div className="flex max-w-4xl flex-col gap-4">
+            {comments.length === 0 && (
+                <div className='rounded-2xl border border-border bg-paper p-8 text-center text-text-muted'>
+                    Os comentários não estão disponíveis para esta aula.
+                </div>
+            )}
+            {comments.map((comment, index) => (
+                <Comment key={`${comment.author.userName}-${comment.publishDate}-${index}`} {...comment} />
             ))}
         </div>
     )

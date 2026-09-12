@@ -13,8 +13,8 @@ export interface IPlayerClassProps {
 export const PlayerClass = ({ title, playing, done, onCheck, onPlay }: IPlayerClassProps) => {
 
     return (
-        <button className="flex gap-6 p-4 items-center" onClick={() => onPlay()}>
-            <div className="group" onClick={e => { e.stopPropagation(); onCheck(); }}>
+        <button type="button" data-playing={playing} className="group/item flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-text-muted transition hover:bg-paper-elevated hover:text-text data-[playing=true]:bg-primary/10 data-[playing=true]:text-text" onClick={onPlay}>
+            <div className="group shrink-0 text-primary" onClick={e => { e.stopPropagation(); onCheck(); }}>
                 {!done
                     ? (
                         <>
@@ -31,22 +31,22 @@ export const PlayerClass = ({ title, playing, done, onCheck, onPlay }: IPlayerCl
                     : (
                         <MdCheckCircle
                             size={24}
-                            className="min-w-6 hidden group-hover:block"
+                            className="min-w-6 text-green-400"
                         />
                     )
                 }
             </div>
 
-            <div className="flex flex-col gap-1 items-start">
+            <div className="flex min-w-0 flex-col items-start gap-1">
                 <p
                     data-done={done}
-                    className="line-clamp-2 text-start data-[done=true]:text-green-400"
+                    className="line-clamp-2 text-start text-sm font-bold data-[done=true]:text-green-400"
                 >
                     {title}
                 </p>
 
                 {playing && (
-                    <span className="px-2 py-1 bg-blue-400 rounded-full leading-4">
+                    <span className="rounded-full bg-primary/15 px-2 py-0.5 text-xs font-extrabold leading-4 text-primary">
                         Reproduzindo
                     </span>
                 )}

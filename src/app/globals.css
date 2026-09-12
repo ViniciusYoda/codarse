@@ -2,34 +2,64 @@
 
 @theme inline {
   --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
   --color-error: var(--color-error);
   --color-paper: var(--color-paper);
+  --color-paper-elevated: var(--color-paper-elevated);
+  --color-border: var(--color-border);
   --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
   --color-background: var(--color-background);
   --color-primary-contrast: var(--color-primary-contrast);
 }
 
 :root {
-  --color-text: #ffffff;
-  --color-error: #980000;
-  --color-paper: #232323;
-  --color-primary: #009688;
-  --color-background: #000000;
-  --color-primary-contrast: #ffffff;
+  --color-text: #f4f8f7;
+  --color-text-muted: #9aabaa;
+  --color-error: #ef4444;
+  --color-paper: #121716;
+  --color-paper-elevated: #1a211f;
+  --color-border: #2a3532;
+  --color-primary: #20c9b5;
+  --color-primary-hover: #42dfcc;
+  --color-background: #070a09;
+  --color-primary-contrast: #04100e;
 }
 
 * {
-	@apply outline-primary outline-1 -outline-offset-2
+	box-sizing: border-box;
 }
 
 html,
 body {
-	overflow: overlay;
-  @apply bg-background text-text w-screen h-screen underline-offset-4;
+	overflow: auto;
+  @apply min-h-screen w-full bg-background text-text underline-offset-4 antialiased;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 15% -10%, rgb(32 201 181 / 0.12), transparent 28rem),
+    radial-gradient(circle at 90% 12%, rgb(32 201 181 / 0.06), transparent 24rem);
+  background-attachment: fixed;
 }
 
 a {
-	@apply hover:underline active:opacity-50 transition-opacity
+	@apply transition-colors;
+}
+
+button,
+a {
+  @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+}
+
+button:not(:disabled),
+a {
+  @apply cursor-pointer;
+}
+
+::selection {
+  color: var(--color-primary-contrast);
+  background: var(--color-primary);
 }
 
 
@@ -38,7 +68,7 @@ a {
 }
 
 *::-webkit-scrollbar {
-  @apply h-3 w-2;
+  @apply h-2 w-2;
 }
 
 *::-webkit-scrollbar-button {
@@ -50,7 +80,7 @@ a {
 }
 
 *::-webkit-scrollbar-thumb {
-  @apply rounded-full bg-paper;
+  @apply rounded-full bg-border;
 }
 
 *::-webkit-scrollbar-track {

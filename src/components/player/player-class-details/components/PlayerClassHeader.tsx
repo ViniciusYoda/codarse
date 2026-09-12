@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo } from 'react';
 import { UrlMatcher } from 'interweave-autolink';
 import { MatcherInterface } from 'interweave';
@@ -18,7 +20,7 @@ export const PlayerClassHeader = ({ description, title, onTimeClick }: IPlayerCl
             'UrlMatcher',
             { validateTLD: false },
             ({ url }) => (
-                <a href={url} target='_blank' className='text-primary'>
+                <a href={url} target='_blank' rel='noreferrer' className='text-primary'>
                     {url}
                 </a>
             )
@@ -39,7 +41,7 @@ export const PlayerClassHeader = ({ description, title, onTimeClick }: IPlayerCl
             propName: 'TimeMatcher',
             inverseName: 'noTimeMatcher',
             createElement: (children, props) => (
-                <button key={props.key} className='text-primary hover:underline' onClick={() => handleTimeClick(String(children))}>
+                <button type='button' key={props.key} className='text-primary hover:underline' onClick={() => handleTimeClick(String(children))}>
                     {children}
                 </button>
             ),
@@ -62,16 +64,18 @@ export const PlayerClassHeader = ({ description, title, onTimeClick }: IPlayerCl
     }, [onTimeClick]);
 
     return (
-        <div className='flex gap-2 flex-col'>
-            <h3 className='font-extrabold text-xl'>
+        <section className='flex max-w-4xl flex-col gap-4 rounded-2xl border border-border bg-paper p-5 sm:p-7'>
+            <h3 className='text-2xl font-black leading-tight tracking-tight'>
                 {title}
             </h3>
 
-            <Interweave
-                content={description}
-                matchers={[urlMatcher, timeMatcher]}
-            />
-        </div>
+            <div className='whitespace-pre-line leading-7 text-text-muted'>
+                <Interweave
+                    content={description}
+                    matchers={[urlMatcher, timeMatcher]}
+                />
+            </div>
+        </section>
     )
 
 }

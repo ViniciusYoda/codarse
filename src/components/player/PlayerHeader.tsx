@@ -8,19 +8,19 @@ interface IPlayerHeaderProps {
 
 export const PlayerHeader = ({ subtitle, title }: IPlayerHeaderProps) => {
     return (
-        <div className='flex gap-4 items-center bg-paper px-4'>
-            <Link href='/'>
+        <header className='flex h-18 shrink-0 items-center gap-4 border-b border-border bg-paper/90 px-4 backdrop-blur-xl sm:px-6'>
+            <Link href='/' aria-label='Voltar para a página inicial' className='grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-border text-text-muted transition hover:border-primary/50 hover:bg-paper-elevated hover:text-primary'>
                 <MdHome size={28} />
             </Link>
 
-            <div className='flex flex-col gap-1 py-1'>
-                <h1 className='font-bold text-lg line-clamp-1'>
+            <div className='flex min-w-0 flex-col'>
+                <h1 className='line-clamp-1 font-black sm:text-lg'>
                     {title}
                 </h1>
-                <h2 className='line-clamp-1'>
+                <h2 className='line-clamp-1 text-sm text-text-muted'>
                     {subtitle}
                 </h2>
             </div>
-        </div>
+        </header>
     )
 }

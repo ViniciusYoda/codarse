@@ -43,12 +43,12 @@ export const PlayerVideoPlayer = forwardRef<IPlayerVideoPlayerRef, IPlayerVideoP
     }), []);
 
     return (
-      <div ref={wrapperRef} className='relative h-full'>
+      <div ref={wrapperRef} className='relative h-full overflow-hidden bg-black shadow-[0_20px_80px_rgba(0,0,0,0.42)] lg:rounded-2xl'>
         {showNextButton && (
           <button
             type='button'
             onClick={onPlayNext}
-            className='absolute right-4 top-36 flex items-center gap-2 rounded-lg bg-primary p-3 px-4 font-bold'
+            className='absolute right-4 top-4 z-10 flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 font-black text-primary-contrast shadow-xl transition hover:bg-primary-hover'
           >
             Próxima aula em {secondsUntilEnd}
             <MdPlayCircle size={24} />

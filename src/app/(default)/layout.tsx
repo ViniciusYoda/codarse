@@ -1,9 +1,9 @@
 import { Header } from '@/components/header/Header';
 
 
-interface ILayout extends Readonly<{ children: React.ReactNode }> { }
+type LayoutProps = Readonly<{ children: React.ReactNode }>;
 
-export default function Layout({ children }: ILayout) {
+export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header />

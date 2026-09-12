@@ -1,9 +1,9 @@
 'use client';
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { MdComment, MdThumbUp, MdVisibility } from "react-icons/md";
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { MdComment, MdThumbUp, MdVisibility } from 'react-icons/md';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useRouter } from 'next/navigation';
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic';
 
 import { IPlayerVideoPlayerRef, PlayerVideoPlayer } from './components/PlayerVideoPlayer';
 import { CourseHeaderLoading } from '@/components/course-header/CourseHeaderLoading';
@@ -13,21 +13,21 @@ import { LocalStorage } from '@/shared/services/local-storage';
 import { ICommentProps } from './components/comments/Comment';
 import { PlayerPlaylist } from '../playlist/PlayerPlaylist';
 import { Comments } from './components/comments/Comments';
-import { FaSlash } from "react-icons/fa";
 
 const CourseHeader = dynamic(
     () => import('@/components/course-header/CourseHeader').then(res => res.CourseHeader),
     { ssr: false, loading: CourseHeaderLoading },
 );
 
+
 interface IPlayerClassDetailsProps {
     course: {
         id: string;
         title: string;
         description: string;
-        numberofClasses: number;
+        numberOfClasses: number;
         classGroups: Pick<IPlayerClassGroupProps, 'classes' | 'title'>[];
-    }
+    };
     classItem: {
         id: string;
         title: string;
@@ -39,13 +39,13 @@ interface IPlayerClassDetailsProps {
     };
     comments: ICommentProps[];
 }
-
 export const PlayerClassDetails = ({ course, classItem, comments }: IPlayerClassDetailsProps) => {
     const router = useRouter();
 
     const playerVideoPlayerRef = useRef<IPlayerVideoPlayerRef>(null);
 
     const [currentTab, setCurrentTab] = useState('class-details');
+
 
     useEffect(() => {
         const matchMedia = window.matchMedia("(min-width: 768px)");
@@ -69,6 +69,7 @@ export const PlayerClassDetails = ({ course, classItem, comments }: IPlayerClass
         });
     }, [course.id, course.title, classItem.id, classItem.title]);
 
+
     const nextClassId = useMemo(() => {
         const classes = course.classGroups.flatMap(classGroup => classGroup.classes);
 
@@ -83,6 +84,7 @@ export const PlayerClassDetails = ({ course, classItem, comments }: IPlayerClass
         return classes[nextClassIndex].classId;
     }, [course.classGroups, classItem.id]);
 
+
     const handlePlayerNext = useCallback(() => {
         if (!nextClassId) return;
 
@@ -90,9 +92,11 @@ export const PlayerClassDetails = ({ course, classItem, comments }: IPlayerClass
         router.push(`/player/${course.id}/${nextClassId}`);
     }, [course.id, classItem.id, nextClassId, router]);
 
+
     return (
-        <div className="flex-1 overflow-auto pb-10">
-            <div className="aspect-video">
+        <div className='min-w-0 flex-1 overflow-auto pb-12'>
+            <div className='mx-auto w-full max-w-6xl lg:px-6 lg:pt-6'>
+            <div className='aspect-video'>
                 <PlayerVideoPlayer
                     ref={playerVideoPlayerRef}
                     videoId={classItem.videoId}
@@ -100,74 +104,72 @@ export const PlayerClassDetails = ({ course, classItem, comments }: IPlayerClass
                 />
             </div>
 
-            <div className='flex gap-2 p-2 opacity-50'>
-                <div className='flex gap-1 items-center'>
+            <div className='flex flex-wrap gap-2 px-4 py-4 text-sm text-text-muted lg:px-0'>
+                <div className='flex items-center gap-1.5 rounded-full border border-border bg-paper px-3 py-1.5'>
                     <MdVisibility />
                     <span>{classItem.viewsCount}</span>
                     <span>visualizações</span>
                 </div>
-                <a className='flex gap-1 items-center' target='_blank' href={`https://www.youtube.com/watch?v=${classItem.videoId}`}>
+                <a className='flex items-center gap-1.5 rounded-full border border-border bg-paper px-3 py-1.5 transition hover:border-primary/40 hover:text-primary hover:no-underline' target='_blank' rel='noreferrer' href={`https://www.youtube.com/watch?v=${classItem.videoId}`}>
                     <MdThumbUp />
                     <span>{classItem.likesCount}</span>
                     <span>curtidas</span>
                 </a>
-                <div className='flex gap-1 items-center'>
+                <div className='flex items-center gap-1.5 rounded-full border border-border bg-paper px-3 py-1.5'>
                     <MdComment />
                     <span>{classItem.commentsCount}</span>
                     <span>comentários</span>
                 </div>
             </div>
 
-            <Tabs.Root value={currentTab} onValueChange={value => setCurrentTab(value)}>
-                <Tabs.List className='flex gap-4'>
+            <Tabs.Root value={currentTab} onValueChange={value => setCurrentTab(value)} className='px-4 lg:px-0'>
+                <Tabs.List className='flex gap-1 overflow-x-auto rounded-xl border border-border bg-paper p-1'>
                     <Tabs.Trigger
                         value='class-details'
-                        className='p-2 flex items-center justify-center border-b-4 border-transparent data-[state=active]:border-primary'
+                        className='shrink-0 rounded-lg px-4 py-2.5 text-sm font-extrabold text-text-muted transition hover:text-text data-[state=active]:bg-paper-elevated data-[state=active]:text-primary'
                     >
                         Visão geral
                     </Tabs.Trigger>
                     <Tabs.Trigger
                         value='course-playlist'
-                        className='p-2 flex items-center justify-center border-b-4 border-transparent data-[state=active]:border-primary md:hidden'
+                        className='shrink-0 rounded-lg px-4 py-2.5 text-sm font-extrabold text-text-muted transition hover:text-text data-[state=active]:bg-paper-elevated data-[state=active]:text-primary md:hidden'
                     >
                         Conteúdo do curso
                     </Tabs.Trigger>
                     <Tabs.Trigger
                         value='class-comments'
-                        className='p-2 flex items-center justify-center border-b-4 border-transparent data-[state=active]:border-primary'
+                        className='shrink-0 rounded-lg px-4 py-2.5 text-sm font-extrabold text-text-muted transition hover:text-text data-[state=active]:bg-paper-elevated data-[state=active]:text-primary'
                     >
                         Comentários
                     </Tabs.Trigger>
                     <Tabs.Trigger
                         value='course-details'
-                        className='p-2 flex items-center justify-center border-b-4 border-transparent data-[state=active]:border-primary'
+                        className='shrink-0 rounded-lg px-4 py-2.5 text-sm font-extrabold text-text-muted transition hover:text-text data-[state=active]:bg-paper-elevated data-[state=active]:text-primary'
                     >
                         Visão geral do curso
                     </Tabs.Trigger>
                 </Tabs.List>
 
-                <hr className='border-paper mb-2' />
-
-                <Tabs.Content value='class-details' className='px-2'>
+                <Tabs.Content value='class-details' className='pt-7'>
                     <PlayerClassHeader
                         title={classItem.title}
                         description={classItem.description}
                         onTimeClick={seconds => playerVideoPlayerRef.current?.setProgress(seconds)}
                     />
                 </Tabs.Content>
-                <Tabs.Content value='course-playlist' className='px-2'>
+                <Tabs.Content value='course-playlist' className='pt-5'>
                     <PlayerPlaylist
                         playingCourseId={course.id}
                         playingClassId={classItem.id}
                         classGroups={course.classGroups}
                     />
                 </Tabs.Content>
-                <Tabs.Content value='class-comments' className='px-2'>
+                <Tabs.Content value='class-comments' className='pt-7'>
                     <Comments
                         comments={comments}
                     />
                 </Tabs.Content>
-                <Tabs.Content value='course-details' className='px-2'>
+                <Tabs.Content value='course-details' className='pt-7'>
                     <CourseHeader
                         title={course.title}
                         description={course.description}
@@ -175,6 +177,7 @@ export const PlayerClassDetails = ({ course, classItem, comments }: IPlayerClass
                     />
                 </Tabs.Content>
             </Tabs.Root>
+            </div>
         </div>
-    )
-}
+    );
+};

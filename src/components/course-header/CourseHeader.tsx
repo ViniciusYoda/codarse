@@ -14,8 +14,8 @@ export const CourseHeader = ({ title, description, numberOfClasses }: ICourseHea
 
 
   return (
-    <div className='flex flex-col gap-2'>
-      <h1 className='font-extrabold text-xl'>
+    <header className='flex flex-col gap-5'>
+      <h1 className='max-w-3xl text-3xl font-black leading-tight tracking-tight sm:text-4xl'>
         {title}
       </h1>
 
@@ -23,18 +23,18 @@ export const CourseHeader = ({ title, description, numberOfClasses }: ICourseHea
         {description}
       </CollapsibleText>
 
-      <div className='flex gap-2 items-center'>
-        <ContentCopy title='Copie o link abaixo' content={window.location.href}>
-          <button className='py-2 px-4 bg-paper rounded-full flex gap-2 items-center'>
+      <div className='flex flex-wrap items-center gap-3 border-t border-border pt-5'>
+        <ContentCopy title='Copie o link abaixo'>
+          <button type='button' className='flex items-center gap-2 rounded-full border border-border bg-paper px-4 py-2.5 text-sm font-extrabold transition hover:border-primary/50 hover:bg-paper-elevated'>
             <MdShare />
             Compartilhar
           </button>
         </ContentCopy>
 
-        <span>
+        <span className='rounded-full bg-primary/10 px-4 py-2.5 text-sm font-extrabold text-primary'>
           {numberOfClasses} aulas
         </span>
       </div>
-    </div>
+    </header>
   );
 };
